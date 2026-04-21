@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="tr">
+
+<head>
+  {% include 'partials/head.html' %}
+
+</head>
+
+<body class="index-page">
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+ {% include 'partials/header.html' %}
+</header>
+
+ {% block content %} {% endblock %}
+  
+ <footer id="footer" class="footer dark-background">
+  {% include 'partials/footer.html' %}
+
+ </footer>
+ {% include "partials/script.html"%}
+
+</body>
+
+</html>
