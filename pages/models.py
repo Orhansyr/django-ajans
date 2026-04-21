@@ -19,7 +19,7 @@ class ProductCategory(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return self.title
     
     class Meta:
         verbose_name = 'Kategori'
@@ -40,7 +40,7 @@ class Product(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return self.title
     
     class Meta:
         verbose_name = 'Ürün'
@@ -53,7 +53,7 @@ class product_image(models.Model):
     image = models.ImageField('Resim', upload_to='product_images/')
 
     def __str__(self):
-        return f"{self.product.name} - Resim"
+        return f"{self.product.title} - Resim"
     
     class Meta:
         verbose_name = 'Ürün Resmi'
