@@ -4,7 +4,7 @@ from tinymce.models import HTMLField
 from django.utils.html import format_html
 
 
-class ProductCategory(models.Model):
+class Product_Category(models.Model):
     title = models.CharField('Kategori Adı', max_length=100)
     slug = models.SlugField('slug', max_length=100, unique=True)
     image = models.ImageField('Kategori Resmi', upload_to='category_images/')
@@ -28,7 +28,7 @@ class ProductCategory(models.Model):
 
 class Product(models.Model):
     title = models.CharField('isim', max_length=100)
-    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
+    category = models.ForeignKey(Product_Category, on_delete=models.CASCADE, related_name='products', verbose_name='Kategori')
     content = HTMLField('Açıklama')
     content2 = HTMLField('Açıklama-2')
     slug = models.SlugField('slug', max_length=100, unique=True)
@@ -47,9 +47,9 @@ class Product(models.Model):
         verbose_name_plural = 'Ürünler'
 
 
-class product_image(models.Model):
+class Product_image(models.Model):
     title = models.CharField('Başlık', max_length=100)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name='Ürün')
     image = models.ImageField('Resim', upload_to='product_images/')
 
     def __str__(self):
@@ -77,7 +77,6 @@ class page(models.Model):
     meta_description = models.CharField('Meta Description', max_length=255)
     created_at = models.DateTimeField('Oluşturulma Tarihi', auto_now_add=True)
     
-
     def __str__(self):
         return self.title
     
@@ -87,19 +86,30 @@ class page(models.Model):
         abstract = True
 
     
-class AboutPage(page):
-    image = models.ImageField('Resim', upload_to='page_images/')
+class About_Page(page):
 
     def __str__(self):
         return self.title
 
-    @admin.display(description="Hakkımızda Resmi")
-    def image_tag(self):  
+class Page_Image(models.Model):
+    title = models.CharField('Başlık', max_length=100)
+    image = models.ImageField('Resim', upload_to='page_images/')
+    page = models.ForeignKey('About_Page', on_delete=models.CASCADE, related_name='images',)
+
+    def __str__(self):
+        return f"{self.title} - Resim"
+    
+    class Meta:
+        verbose_name = 'Sayfa Resmi'
+        verbose_name_plural = 'Sayfa Resimleri'
+    
+    @admin.display(description="Sayfa Resmi")
+    def image_tag(self):
         if self.image:
             return format_html(
                 '<img src="{}" width="170" height="170" />', self.image.url
             )
-        return "Görsel yok"
+        return "Görsel yok"  
         
 
 
