@@ -2,8 +2,11 @@ asgiref==3.11.1
 Django==6.0.4
 django-environ==0.13.0
 django-tinymce==5.0.0
-mysql==0.0.3
+django-mysql==4.19.0
 mysqlclient==2.2.8
 pillow==12.2.0
 sqlparse==0.5.5
 tzdata==2026.1
+easy-thumbnails==2.10.1
+django-cleanup==9.0.0
+

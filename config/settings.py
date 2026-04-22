@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tinymce',
     'pages',
+    "django_cleanup.apps.CleanupConfig",
+    "easy_thumbnails",
 ]
 
 MIDDLEWARE = [
@@ -150,3 +152,36 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # collectstatic komutu ile static dosyala
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 360,
+}
+
+
+# Easy Thumbnails Configuration
+THUMBNAIL_ALIASES = {
+    "": {
+        "slider": {"size": (690, 418), "crop": "center"},
+        "category": {"size": (310, 206), "crop": "center"},
+        "yazar": {"size": (300, 192), "crop": "center"},
+        "video": {"size": (310, 175), "crop": "center"},
+        "haber_sayfa_reklam": {"size": (341, 346), "crop": "center"},
+        "ust_banner_reklam": {"size": (750, 90), "crop": "center"},
+    },
+}
+
+THUMBNAIL_PROCESSORS = (
+    "easy_thumbnails.processors.colorspace",
+    "easy_thumbnails.processors.autocrop",
+    "easy_thumbnails.processors.scale_and_crop",
+    "easy_thumbnails.processors.filters",
+)
+
+THUMBNAIL_HIGH_RESOLUTION = True
+THUMBNAIL_PRESERVE_FORMAT = True
+
+# WebP'ye dönüştürülmesini istemediğimiz formatlar (örn. PNG, GIF) için uzantıları belirtin
+THUMBNAIL_PRESERVE_EXTENSIONS = "gif"  # Bunlar hariç her şeyi dönüştür
+THUMBNAIL_SUBDIR = "thumbs"
+THUMBNAIL_FORMAT = "WEBP"  # Çıktı formatı WebP
+THUMBNAIL_QUALITY = 85
